@@ -7,8 +7,8 @@ use DateTime;
 
 class Index
 {
-    public $view;
-    public $data;
+    public $view; //Переменная для обьекта View
+    public $data; //Переменная для обьекта модели
     public $usd;
     public $xml;
     public $evro;
@@ -22,31 +22,32 @@ class Index
 
     public function showAction()
     {
-        $this->data = new GetData();
-        $dateTime = new DateTime($_POST['date']);
-        $this->data->date = $dateTime->format('d/m/Y');
-        $prevDate = $dateTime->modify('-1 day');
-        $this->data->prevDate = $prevDate->format('d/m/Y');
-        $this->xml = $this->data->getDataInDate();
+        $this->data = new GetData();  //Создаю обьект модели
+        $dateTime = new DateTime($_POST['date']); //Создаю обьект DateTime, чтобы поменять формат даты и получить предыдущий день
+        $this->data->date = $dateTime->format('d/m/Y');// Меняю на нужный формат
+        $prevDate = $dateTime->modify('-1 day');//Получаю предыдущий день
+        $this->data->prevDate = $prevDate->format('d/m/Y');//Меняю формат предыдущего дня
+        $this->xml = $this->data->getDataInDate();//Вызываю метод модели GetData, который получает xml с данными
 
+        //Цикл,достающий из xml доллар
         foreach ($this->xml['0'] as $item) {
             if ($item->attributes()->ID == 'R01235') {
                 $this->usd = $item;
             }
         }
-
+        //Цикл,достающий из xml евро
         foreach ($this->xml['0'] as $item) {
             if ($item->attributes()->ID == 'R01239') {
                 $this->evro = $item;
             }
         }
-
+        //Цикл,достающий из xml евро за пердыдущий день
         foreach ($this->xml['1'] as $item) {
             if ($item->attributes()->ID == 'R01239') {
                 $this->prevEvro = $item;
             }
         }
-
+        //Цикл,достающий из xml доллар за пердыдущий день
         foreach ($this->xml['1'] as $item) {
             if ($item->attributes()->ID == 'R01235') {
                 $this->prevUsd = $item;
