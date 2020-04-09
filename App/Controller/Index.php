@@ -29,25 +29,25 @@ class Index
         $this->data->prevDate = $prevDate->format('d/m/Y');//Меняю формат предыдущего дня
         $this->xml = $this->data->getDataInDate();//Вызываю метод модели GetData, который получает xml с данными
 
-        //Цикл,достающий из xml доллар
+        //Цикл,достающий из xml курс доллара
         foreach ($this->xml['0'] as $item) {
             if ($item->attributes()->ID == 'R01235') {
                 $this->usd = $item;
             }
         }
-        //Цикл,достающий из xml евро
+        //Цикл,достающий из xml курс евро
         foreach ($this->xml['0'] as $item) {
             if ($item->attributes()->ID == 'R01239') {
                 $this->evro = $item;
             }
         }
-        //Цикл,достающий из xml евро за пердыдущий день
+        //Цикл,достающий из xml евро за предыдущий день
         foreach ($this->xml['1'] as $item) {
             if ($item->attributes()->ID == 'R01239') {
                 $this->prevEvro = $item;
             }
         }
-        //Цикл,достающий из xml доллар за пердыдущий день
+        //Цикл,достающий из xml доллар за предыдущий день
         foreach ($this->xml['1'] as $item) {
             if ($item->attributes()->ID == 'R01235') {
                 $this->prevUsd = $item;
