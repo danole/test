@@ -22,12 +22,12 @@ class Index
 
     public function showAction()
     {
-        $this->data=new GetData();
+        $this->data = new GetData();
         $dateTime = new DateTime($_POST['date']);
-        $this->data->date=$dateTime->format('d/m/Y');
-        $prevDate=$dateTime->modify('-1 day');
-        $this->data->prevDate=$prevDate->format('d/m/Y');
-        $this->xml=$this->data->getDataInDate();
+        $this->data->date = $dateTime->format('d/m/Y');
+        $prevDate = $dateTime->modify('-1 day');
+        $this->data->prevDate = $prevDate->format('d/m/Y');
+        $this->xml = $this->data->getDataInDate();
 
         foreach ($this->xml['0'] as $item) {
             if ($item->attributes()->ID == 'R01235') {
